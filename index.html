@@ -17,6 +17,12 @@
       width: 100%;
       height: 100%;
     }
+    .mapboxgl-popup-content {
+      font-family: 'Inter', 'Arial', sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 280px;
+    }
   </style>
 </head>
 <body>
@@ -50,6 +56,10 @@
           const prj = row["Project"];
           const pir = row["Project Interface Rep (PIR)"];
           const date = row["Date"];
+          const observedBy = row["Created By"];
+          const contractors = row["Contractors On Site"];
+          const currentPhase = row["Current Phase / Activities"];
+          const safetyObservations = row["Safety Observations"];
 
           if (isNaN(lat) || isNaN(lon)) {
             console.warn(`Row ${index + 2} skipped: Latitude or Longitude is not a number.`, row);
@@ -64,7 +74,12 @@
           new mapboxgl.Marker()
             .setLngLat([lon, lat])
             .setPopup(new mapboxgl.Popup().setHTML(
-              `<strong>Date:</strong> ${date}<br><strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`
+              `<strong>Date:</strong> ${date}<br>
+              <strong>Project:</strong> ${prj}<br>
+              <strong>Observed By:</strong> ${observedBy}<br>
+              <strong>Contractors:</strong> ${contractors}<br>
+              <strong>Current Phase / Activities:</strong> ${currentPhase}<br>
+              <strong>Safety Observations:</strong> ${safetyObservations}<br>`
             ))
             .addTo(map);
         });
