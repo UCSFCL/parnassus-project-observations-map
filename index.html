@@ -45,8 +45,8 @@
       skipEmptyLines: true,
       complete: function(results) {
         results.data.forEach((row, index) => {
-          const lat = parseFloat(row["Latitude"]);
-          const lon = parseFloat(row["Longitude"]);
+          const lat = parseFloat((row["Latitude"] || "").trim());
+          const lon = parseFloat((row["Longitude"] || "").trim());
           const prj = row["Project"];
           const pir = row["Project Interface Rep (PIR)"];
           const date = row["Date"];
