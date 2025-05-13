@@ -47,8 +47,8 @@
 
     for (let i = 1; i < rows.length; i++) {
       const cols = rows[i].split(',');
-      const lat = parseFloat(cols[headers.indexOf("Latitude")]);
-      const lon = parseFloat(cols[headers.indexOf("Longitude")]);
+      const lat = parseFloat(cols[headers.indexOf("Lat")]);
+      const lon = parseFloat(cols[headers.indexOf("Long")]);
       const prj = cols[headers.indexOf("Project")];
       const pir = cols[headers.indexOf("Project Interface Rep (PIR)")];
 
