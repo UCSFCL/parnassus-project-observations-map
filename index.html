@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Smartsheet Map with PapaParse</title>
+  <title>Parnassus Project Observations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
@@ -33,7 +33,6 @@
 
   map.on('load', () => {
     map.resize();
-    loadCSV();
   });
 
   async function loadCSV() {
@@ -54,8 +53,7 @@
           if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
             new mapboxgl.Marker()
               .setLngLat([lon, lat])
-              .setPopup(new mapboxgl.Popup().setHTML(
-                `<strong>Date:</strong> ${date}<br><strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`
+              .setPopup(new mapboxgl.Popup().setHTML(`<strong>Date:</strong> ${date}<br><strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`
               ))
               .addTo(map);
           } else {
@@ -68,6 +66,7 @@
       }
     });
   }
+  loadCSV();
 </script>
 </body>
 </html>
