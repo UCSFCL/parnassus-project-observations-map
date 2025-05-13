@@ -2,10 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Smartsheet Map</title>
+  <title>Smartsheet Map with PapaParse</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
     html, body {
       height: 100%;
@@ -26,7 +27,7 @@
   const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-122.4580, 37.7630], // UCSF Parnassus
+    center: [-122.4580, 37.7630],
     zoom: 15
   });
 
@@ -36,33 +37,36 @@
   });
 
   async function loadCSV() {
-    try {
-      const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRm2t2PkZpZb_8-PoS8ehh8T-UR_FINoljO4z4_MgHgnMTyTmnCLMqc87efRqfsAjyjWZ3OhbhdYpRl/pub?gid=0&single=true&output=csv');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const text = await response.text();
-      const rows = text.trim().split('\n');
-      const headers = rows[0].split(',');
+    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTQwQ0AwTkDKtqDKc_aA9EC_rpt5ES_aRKHoh3NFZ2trux5nDHVCCXvHXx2Z7M4GSjD8AKm-mR_YwZ5/pub?gid=0&single=true&output=csv');
+    const csvText = await response.text();
 
-      for (let i = 1; i < rows.length; i++) {
-        const cols = rows[i].split(',');
-        const lat = parseFloat(cols[headers.indexOf("Latitude")]);
-        const lon = parseFloat(cols[headers.indexOf("Longitude")]);
-        const prj = cols[headers.indexOf("Project")];
-        const pir = cols[headers.indexOf("Project Interface Rep (PIR)")];
-        const date = cols[headers.indexOf("Date")];
+    Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true,
+      complete: function(results) {
+        results.data.forEach(row => {
+          const lat = parseFloat(row["Latitude"]);
+          const lon = parseFloat(row["Longitude"]);
+          const prj = row["Project"];
+          const pir = row["Project Interface Rep (PIR)"];
+          const date = row["Date"];
 
-        if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
-          new mapboxgl.Marker()
-            .setLngLat([lon, lat])
-            .setPopup(new mapboxgl.Popup().setHTML(`<strong>Date:</strong> ${date}<br><strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`))
-            .addTo(map);
-        }
+          if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+            new mapboxgl.Marker()
+              .setLngLat([lon, lat])
+              .setPopup(new mapboxgl.Popup().setHTML(
+                `<strong>Date:</strong> ${date}<br><strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`
+              ))
+              .addTo(map);
+          } else {
+            console.warn("Skipped invalid row:", row);
+          }
+        });
+      },
+      error: function(err) {
+        console.error("CSV parse error:", err);
       }
-    } catch (error) {
-      console.error('Error loading CSV data:', error);
-    }
+    });
   }
 </script>
 </body>
