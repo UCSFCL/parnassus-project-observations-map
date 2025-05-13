@@ -52,7 +52,7 @@
         const prj = cols[headers.indexOf("Project")];
         const pir = cols[headers.indexOf("Project Interface Rep (PIR)")];
 
-        if (!isNaN(lat) && !isNaN(lon)) {
+        if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
           new mapboxgl.Marker()
             .setLngLat([lon, lat])
             .setPopup(new mapboxgl.Popup().setHTML(`<strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`))
