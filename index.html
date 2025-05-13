@@ -49,13 +49,13 @@
       const cols = rows[i].split(',');
       const lat = parseFloat(cols[headers.indexOf("Latitude")]);
       const lon = parseFloat(cols[headers.indexOf("Longitude")]);
-      const title = cols[headers.indexOf("Title")];
-      const desc = cols[headers.indexOf("Description")];
+      const prj = cols[headers.indexOf("Project")];
+      const pir = cols[headers.indexOf("Project Interface Rep (PIR)")];
 
       if (!isNaN(lat) && !isNaN(lon)) {
         new mapboxgl.Marker()
           .setLngLat([lon, lat])
-          .setPopup(new mapboxgl.Popup().setHTML(`<strong>${title}</strong><br>${desc}`))
+          .setPopup(new mapboxgl.Popup().setHTML(`<strong>Project:</strong> ${prj}<br><strong>PIR:</strong> ${pir}`))
           .addTo(map);
       }
     }
