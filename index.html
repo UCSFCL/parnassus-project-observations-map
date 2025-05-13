@@ -33,6 +33,7 @@
 
   map.on('load', () => {
     map.resize();
+    loadCSV();
   });
 
   async function loadCSV() {
@@ -66,7 +67,6 @@
       }
     });
   }
-  loadCSV();
 </script>
 </body>
 </html>
