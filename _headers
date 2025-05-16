@@ -4,5 +4,5 @@
   Content-Security-Policy: frame-ancestors 'self' https://app.smartsheet.com https://smartsheet.com;
 
 /embed.html
-  X-Frame-Options: ALLOW-FROM https://app.smartsheet.com
+  X-Frame-Options: ALLOWALL
   Content-Security-Policy: frame-ancestors 'self' https://app.smartsheet.com https://smartsheet.com;
