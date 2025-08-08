@@ -57,9 +57,12 @@
           const pir = row["Project Interface Rep (PIR)"];
           const date = row["Date"];
           const observedBy = row["Created By"];
-          const contractors = row["Contractors On Site"];
-          const currentPhase = row["Current Phase / Activities"];
+          const gc = row["General Contractor"];
+          const subs = row["Subcontractors On Site"];
+          const currentPhase = row["Current Phase"];
+          const activities = row["Activities"];
           const safetyObservations = row["Safety Observations"];
+          const issuesRisks = row["Issues, Risks & Stakeholder Concerns"];
 
           if (isNaN(lat) || isNaN(lon)) {
             console.warn(`Row ${index + 2} skipped: Latitude or Longitude is not a number.`, row);
@@ -74,12 +77,16 @@
           new mapboxgl.Marker()
             .setLngLat([lon, lat])
             .setPopup(new mapboxgl.Popup().setHTML(
-              `<strong>Date:</strong> ${date}<br>
-              <strong>Project:</strong> ${prj}<br>
+              `<strong>Observation Date:</strong> ${date}<br>
               <strong>Observed By:</strong> ${observedBy}<br>
-              <strong>Contractors:</strong> ${contractors}<br>
-              <strong>Current Phase / Activities:</strong> ${currentPhase}<br>
-              <strong>Safety Observations:</strong> ${safetyObservations}<br>`
+              <strong>Project:</strong> ${prj}<br>
+              <strong>Project Rep:</strong> ${pir}<br>
+              <strong>General Contractor:</strong> ${gc}<br>
+              <strong>Subcontractors On Site:</strong> ${subs}<br>
+              <strong>Current Phase:</strong> ${currentPhase}<br>
+              <strong>Activities:</strong> ${activities}<br>
+              <strong>Safety Observations:</strong> ${safetyObservations}<br>
+              <strong>Issues/Risks:</strong> ${issuesRisks}<br>`
             ))
             .addTo(map);
         });
