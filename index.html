@@ -77,30 +77,30 @@
           }
 
           const popupHTML = `
-  <div class="obs">
-    <div><strong>Observation Date:</strong> ${date}</div>
-    <div><strong>Observed By:</strong> ${observedBy}</div>
-    <div><strong>Project:</strong> ${prj}</div>
-    <div><strong>Project Rep:</strong> ${pir}</div>
-    <div><strong>General Contractor:</strong> ${gc}</div>
-    <div><strong>Subcontractors On Site:</strong> ${subs}</div>
-    <div><strong>Current Phase:</strong> ${currentPhase}</div>
-    <div><strong>Activities:</strong> ${activities}</div>
-    <div><strong>Safety Observations:</strong> ${safetyObservations}</div>
-    <div><strong>Issues/Risks:</strong> ${issuesRisks}</div>
-  </div>
-`;
+            <div class="obs">
+              <div><strong>Observation Date:</strong> ${date}</div>
+              <div><strong>Observed By:</strong> ${observedBy}</div>
+              <div><strong>Project:</strong> ${prj}</div>
+              <div><strong>Project Rep:</strong> ${pir}</div>
+              <div><strong>General Contractor:</strong> ${gc}</div>
+              <div><strong>Subcontractors On Site:</strong> ${subs}</div>
+              <div><strong>Current Phase:</strong> ${currentPhase}</div>
+              <div><strong>Activities:</strong> ${activities}</div>
+              <div><strong>Safety Observations:</strong> ${safetyObservations}</div>
+              <div><strong>Issues/Risks:</strong> ${issuesRisks}</div>
+            </div>
+          `;
 
-new mapboxgl.Marker()
-  .setLngLat([lon, lat])
-  .setPopup(
-    new mapboxgl.Popup({
-      maxWidth: '350px',
-      offset: 12,
-      anchor: 'bottom'
-    }).setHTML(popupHTML)
-  )
-  .addTo(map);
+          new mapboxgl.Marker()
+            .setLngLat([lon, lat])
+            .setPopup(
+              new mapboxgl.Popup({
+                maxWidth: '600px',
+                offset: 12,
+                anchor: 'bottom'
+              }).setHTML(popupHTML)
+            )
+            .addTo(map);
         });
       },
       error: function(err) {
